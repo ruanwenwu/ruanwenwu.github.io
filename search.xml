@@ -4,13 +4,6 @@
   
     
     <entry>
-      <title><![CDATA[ruanwenwu]]></title>
-      <url>http://yoursite.com/2016/08/17/ruanwenwu/</url>
-      <content type="html"><![CDATA[<p>i love php</p>
-]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[Mac环境下搭建hexo并发布到Github Pages]]></title>
       <url>http://yoursite.com/2016/08/14/%E6%90%AD%E5%BB%BAhexo%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0github-pages/</url>
       <content type="html"><![CDATA[<p>首先，最好切换到root用户,否则每次都要sudu，特别麻烦。</p>
