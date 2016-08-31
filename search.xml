@@ -4,6 +4,28 @@
   
     
     <entry>
+      <title><![CDATA[苹果电脑DNS配置]]></title>
+      <url>http://yoursite.com/2016/08/31/%E8%8B%B9%E6%9E%9C%E7%94%B5%E8%84%91DNS%E9%85%8D%E7%BD%AE/</url>
+      <content type="html"><![CDATA[<p>最近，我的苹果电脑经常由于dns导致不能上网的问题。多方查找之后，终于解决。<br>将解决办法记录下来：</p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
+<li><p>选取苹果菜单 &gt;“系统偏好设置”，然后点按“网络”。</p>
+</li>
+<li><p>打开“网络”偏好设置</p>
+</li>
+<li><p>在列表中选择想要使用的网络连接服务（例如 Wi-Fi 或以太网，除非您指定其他服务），然后点按“高级”。</p>
+</li>
+<li><p>点按“DNS”，然后点按“DNS 服务器”列表底部的添加按钮 。输入 DNS 服务器的 IPv4 或 IPv6 地址。比如我的IPv4地址是：192.168.43.1</p>
+</li>
+<li><p>点按“搜索域”列表底部的添加按钮 ，然后输入搜索域，如 baidu.com。</p>
+</li>
+<li><p>完成后，点按“好”。</p>
+</li>
+</ol>
+<p>这样设置完之后，我马上就能上网了。希望能帮到有需要的盆友。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[使用canvas做刮刮乐]]></title>
       <url>http://yoursite.com/2016/08/31/canvas-lottery/</url>
       <content type="html"><![CDATA[<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>一个div。背景图片为刮刮乐的中奖物品。然后给这个div一个canvas，有颜色的蒙版。然后通过清除蒙版的颜色，或者<strong>globalCompositeOperation</strong>来实现擦除效果。</p>
