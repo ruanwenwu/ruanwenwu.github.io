@@ -4,9 +4,41 @@
   
     
     <entry>
+      <title><![CDATA[apache的virtualhost]]></title>
+      <url>http://yoursite.com/2016/09/11/apache%E7%9A%84virtualhost/</url>
+      <content type="html"><![CDATA[<p>我们在开发的过程中，经常需要配置virtual hosts。在配置的过程中，又经常会遇到配置完之后，访问目录403禁止访问的情况。</p>
+<p>一下几个地方我们注意一下，应该就能避免出现这个情况了。</p>
+<p>###Apache的运行用户和用户组</p>
+<p>在apache的配置文件中。可以找到这样两行：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">User</span> <span class="title">daemon</span></div><div class="line"><span class="keyword">Group</span> <span class="title">daemon</span></div></pre></td></tr></table></figure>
+<p>这就是apache运行的用户和用户组。我们项目里的文件通过web能否访问，需要根据这个用户或者组的权限来看。</p>
+<p>###virtual host的配置</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="section">&lt;Directory “D:test”&gt;</span></div><div class="line">    <span class="attribute"><span class="nomarkup">Options</span></span> -Indexes FollowSymLinks</div><div class="line">    <span class="attribute">AllowOverride</span> None</div><div class="line">    <span class="attribute"><span class="nomarkup">Order</span></span> deny,allow</div><div class="line">    <span class="attribute"><span class="nomarkup">Allow</span></span> from <span class="literal">all</span></div><div class="line"><span class="section">&lt;/Directory&gt;</span></div></pre></td></tr></table></figure>
+<p>上面着一段配置说明：</p>
+<ul>
+<li>在Indexes前，加 + 代表允许目录浏览；加 – 代表禁止目录浏览。</li>
+<li>FollowSymLinks表示是否允许浏览除了当前配置目录之外的其它文件。</li>
+<li>AllowOverride 如果开启了rewrite模块的话，这个一定是是all,并且Options必须有FollowSymLinks才算正确的配置。</li>
+<li>Order deny,allow和Allow from all一般配合起来用。表示线禁止，再允许，如果order deny,allow后有禁止访问列表的话。</li>
+</ul>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[触屏版跳转到电脑版的一个小技巧]]></title>
+      <url>http://yoursite.com/2016/09/05/%E8%A7%A6%E5%B1%8F%E7%89%88%E8%B7%B3%E8%BD%AC%E5%88%B0%E7%94%B5%E8%84%91%E7%89%88%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
+      <content type="html"><![CDATA[<p>大多数移动端的网站的最下面都有一个“电脑版”的链接。这个“电脑版”的功能是在手机上直接浏览电脑版的样式。<br>实现方法可以是这样的：<br>在电脑版里都有这一段代码：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(IS_MOBILE)&#123;</div><div class="line">	header(<span class="string">"Location:http://wap.***.com"</span>);</div><div class="line">	<span class="keyword">exit</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这是一段伪代码。只要把这段代码稍做修改：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(IS_MOBILE &amp;&amp; !IS_THERE_WAP_COOKIE)&#123;</div><div class="line">	header(<span class="string">"Location:http://wap.***.com"</span>);</div><div class="line">	<span class="keyword">exit</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也就是说，只要从wap跳到pc站的时候，写了wap_cookie,那么调过来就不会跳回到wap了。<br>注意，跳过来的时候wap_cookie的过期时间要足够短才可以。否则的话，就一直跳不到wap页面了。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[JS阻止默认行为和冒泡]]></title>
       <url>http://yoursite.com/2016/08/31/JS%E9%98%BB%E6%AD%A2%E9%BB%98%E8%AE%A4%E8%A1%8C%E4%B8%BA%E5%92%8C%E5%86%92%E6%B3%A1/</url>
-      <content type="html"><![CDATA[<h3 id="阻止默认事件"><a href="#阻止默认事件" class="headerlink" title="阻止默认事件"></a>阻止默认事件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">stopDefault</span>(<span class="params"> e </span>) </span>&#123; </div><div class="line"><span class="keyword">if</span> ( e &amp;&amp; e.preventDefault ) </div><div class="line">   e.preventDefault(); </div><div class="line">    <span class="keyword">else</span> </div><div class="line">   <span class="built_in">window</span>.event.returnValue = <span class="literal">false</span>; </div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      <content type="html"><![CDATA[<h3 id="阻止默认事件"><a href="#阻止默认事件" class="headerlink" title="阻止默认事件"></a>阻止默认事件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">stopDefault</span>(<span class="params"> e </span>) </span>&#123; </div><div class="line"><span class="keyword">if</span> ( e &amp;&amp; e.preventDefault ) </div><div class="line">   e.preventDefault(); </div><div class="line"><span class="keyword">else</span> </div><div class="line">   <span class="built_in">window</span>.event.returnValue = <span class="literal">false</span>; </div><div class="line">   <span class="keyword">return</span> <span class="literal">false</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="阻止冒泡"><a href="#阻止冒泡" class="headerlink" title="阻止冒泡"></a>阻止冒泡</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span> (<span class="params">obj,evt</span>) </span>&#123;</div><div class="line">   <span class="keyword">var</span> e=(evt)?evt:<span class="built_in">window</span>.event;</div><div class="line">   <span class="keyword">if</span> (<span class="built_in">window</span>.event) &#123;</div><div class="line">      e.cancelBubble=<span class="literal">true</span>;<span class="comment">// ie下阻止冒泡</span></div><div class="line">   &#125; <span class="keyword">else</span> &#123;</div><div class="line">     <span class="comment">//e.preventDefault();</span></div><div class="line">     e.stopPropagation();<span class="comment">// 其它浏览器下阻止冒泡</span></div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 ]]></content>
     </entry>
